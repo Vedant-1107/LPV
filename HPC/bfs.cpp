@@ -1,81 +1,62 @@
 #include <iostream>
-#include <omp.h>
+#include <queue>
 #include <vector>
+#include <omp.h>
 using namespace std;
 
 int main() {
-    int n;
+    int num_vertices, num_edges, source;
 
-    cout << "Enter number of vertices: ";
-    cin >> n;
+    // input: number of vertices, edges, starting node
+    cin >> num_vertices >> num_edges >> source;
 
-    int graph[n][n];
+    vector<vector<int>> adj_list(num_vertices + 1);
 
-    cout << "Enter adjacency matrix:\n";
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < n; j++) {
-            cin >> graph[i][j];
-        }
+    // take edges input
+    for (int i = 0; i < num_edges; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        adj_list[u].push_back(v);
+        adj_list[v].push_back(u);   // undirected graph
     }
 
-    int start;
-    cout << "Enter starting vertex: ";
-    cin >> start;
+    queue<int> q;                         // queue for BFS
+    vector<bool> visited(num_vertices + 1, false);
 
-    vector<int> visited(n, 0);
-    vector<int> current_level, next_level;
+    q.push(source);                      // start node
+    visited[source] = true;
 
-    visited[start] = 1;
-    current_level.push_back(start);
+    // BFS traversal
+    while (!q.empty()) {
+        int curr_vertex = q.front();
+        q.pop();
 
-    double start_time = omp_get_wtime();
+        cout << curr_vertex << " ";
 
-    while(!current_level.empty()) {
+        // parallel exploration of neighbours
+        #pragma omp parallel for schedule(dynamic)
+        for (int i = 0; i < adj_list[curr_vertex].size(); i++) {
+            int neighbour = adj_list[curr_vertex][i];
 
-        next_level.clear();
-
-        #pragma omp parallel for
-        for(int i = 0; i < current_level.size(); i++) {
-            int node = current_level[i];
-
-            for(int j = 0; j < n; j++) {
-                if(graph[node][j] == 1 && !visited[j]) {
-
-                    #pragma omp critical
-                    {
-                        if(!visited[j]) {
-                            visited[j] = 1;
-                            next_level.push_back(j);
-                        }
-                    }
-                }
+            // if not visited, mark and push
+            if (!visited[neighbour]) {
+                visited[neighbour] = true;
+                q.push(neighbour);
             }
         }
-
-        current_level = next_level;
     }
-
-    double end_time = omp_get_wtime();
-
-    cout << "\nBFS Traversal: ";
-    for(int i = 0; i < n; i++) {
-        if(visited[i])
-            cout << i << " ";
-    }
-
-    cout << "\nExecution Time (Parallel): "
-         << (end_time - start_time) << " seconds";
 
     return 0;
 }
 
 
-// Enter number of vertices: 4
 
-// Adjacency Matrix:
-// 0 1 1 0
-// 1 0 1 1
-// 1 1 0 0
-// 0 1 0 0
-
-// Start vertex: 0
+// 6 7 1
+// 1 2
+// 1 3
+// 2 4
+// 2 5
+// 3 6
+// 4 6
+// 5 6
