@@ -1,0 +1,121 @@
+HPC PRACTICAL VIVA QUESTIONS & ANSWERS
+
+-----------------------------
+GENERAL HPC QUESTIONS
+-----------------------------
+
+1. What is HPC?
+High Performance Computing uses parallel processing to solve complex problems faster.
+
+2. What is parallel computing?
+It is the use of multiple processors/threads to execute tasks simultaneously.
+
+3. What is OpenMP?
+OpenMP is an API for shared-memory parallel programming in C/C++.
+
+4. What is a thread?
+A thread is the smallest unit of execution within a process.
+
+5. What is a race condition?
+When multiple threads access shared data simultaneously causing unpredictable results.
+
+6. What is synchronization?
+It ensures correct execution when multiple threads access shared resources.
+
+7. What is speedup?
+Speedup = Sequential Time / Parallel Time.
+
+8. What is scalability?
+Ability of a system to improve performance with more processors.
+
+9. Shared vs Distributed memory?
+Shared: all threads access same memory.
+Distributed: each processor has its own memory.
+
+10. What is load balancing?
+Distributing work evenly among threads.
+
+-----------------------------
+BFS QUESTIONS
+-----------------------------
+
+11. What is BFS?
+Breadth First Search traverses graph level by level using a queue.
+
+12. Why use a queue in BFS?
+To maintain level-wise traversal order.
+
+13. Where is parallelism in your BFS?
+In exploring neighbors using #pragma omp parallel for.
+
+14. What is visited array?
+It prevents revisiting nodes.
+
+-----------------------------
+DFS QUESTIONS
+-----------------------------
+
+15. What is DFS?
+Depth First Search explores as deep as possible before backtracking.
+
+16. Why recursion in DFS?
+Because DFS naturally follows recursive structure.
+
+17. Where is parallelism in DFS?
+In exploring adjacent nodes using parallel for.
+
+-----------------------------
+BUBBLE SORT QUESTIONS
+-----------------------------
+
+18. What is Bubble Sort?
+It repeatedly swaps adjacent elements to sort the array.
+
+19. Why odd-even transposition?
+It allows parallel execution of swaps.
+
+20. Sequential vs Parallel Bubble Sort?
+Parallel uses multiple threads, sequential uses one.
+
+-----------------------------
+MERGE SORT QUESTIONS
+-----------------------------
+
+21. What is Merge Sort?
+Divide and conquer algorithm that splits and merges arrays.
+
+22. Why is Merge Sort suitable for parallelism?
+Because subarrays can be processed independently.
+
+23. What is #pragma omp task?
+It creates parallel tasks for recursive calls.
+
+-----------------------------
+REDUCTION QUESTIONS
+-----------------------------
+
+24. What is reduction in OpenMP?
+Combines results from multiple threads into a single value.
+
+25. Example of reduction?
+Sum, min, max operations.
+
+26. How is average calculated?
+Average = Sum / Number of elements.
+
+-----------------------------
+COMMON PRACTICAL QUESTIONS
+-----------------------------
+
+27. How do you compile OpenMP code?
+g++ file.cpp -fopenmp -o output
+
+28. Why use OpenMP instead of threads manually?
+It is easier and requires less code.
+
+29. What happens without parallel directive?
+Code runs sequentially.
+
+30. Does parallel always mean faster?
+No, overhead can reduce performance for small inputs.
+
