@@ -1,50 +1,81 @@
 #include <iostream>
-#include <queue>
-#include <vector>
 #include <omp.h>
+#include <vector>
 using namespace std;
 
 int main() {
-    int num_vertices, num_edges, source;
+    int n;
 
-    // input: number of vertices, edges, starting node
-    cin >> num_vertices >> num_edges >> source;
+    cout << "Enter number of vertices: ";
+    cin >> n;
 
-    vector<vector<int>> adj_list(num_vertices + 1);
+    int graph[n][n];
 
-    // take edges input
-    for (int i = 0; i < num_edges; i++) {
-        int u, v;
-        cin >> u >> v;
-
-        adj_list[u].push_back(v);
-        adj_list[v].push_back(u);   // undirected graph
-    }
-
-    queue<int> q;                         // queue for BFS
-    vector<bool> visited(num_vertices + 1, false);
-
-    q.push(source);                      // start from source
-    visited[source] = true;
-
-    // BFS traversal
-    while (!q.empty()) {
-        int curr_vertex = q.front();
-        q.pop();
-
-        cout << curr_vertex << " ";
-
-        // visit all adjacent nodes
-        for (int i = 0; i < adj_list[curr_vertex].size(); i++) {
-            int neighbour = adj_list[curr_vertex][i];
-
-            // if not visited, mark and push into queue
-            if (!visited[neighbour]) {
-                visited[neighbour] = true;
-                q.push(neighbour);
-            }
+    cout << "Enter adjacency matrix:\n";
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            cin >> graph[i][j];
         }
     }
 
+    int start;
+    cout << "Enter starting vertex: ";
+    cin >> start;
+
+    vector<int> visited(n, 0);
+    vector<int> current_level, next_level;
+
+    visited[start] = 1;
+    current_level.push_back(start);
+
+    double start_time = omp_get_wtime();
+
+    while(!current_level.empty()) {
+
+        next_level.clear();
+
+        #pragma omp parallel for
+        for(int i = 0; i < current_level.size(); i++) {
+            int node = current_level[i];
+
+            for(int j = 0; j < n; j++) {
+                if(graph[node][j] == 1 && !visited[j]) {
+
+                    #pragma omp critical
+                    {
+                        if(!visited[j]) {
+                            visited[j] = 1;
+                            next_level.push_back(j);
+                        }
+                    }
+                }
+            }
+        }
+
+        current_level = next_level;
+    }
+
+    double end_time = omp_get_wtime();
+
+    cout << "\nBFS Traversal: ";
+    for(int i = 0; i < n; i++) {
+        if(visited[i])
+            cout << i << " ";
+    }
+
+    cout << "\nExecution Time (Parallel): "
+         << (end_time - start_time) << " seconds";
+
     return 0;
 }
+
+
+// Enter number of vertices: 4
+
+// Adjacency Matrix:
+// 0 1 1 0
+// 1 0 1 1
+// 1 1 0 0
+// 0 1 0 0
+
+// Start vertex: 0
