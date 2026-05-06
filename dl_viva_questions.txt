@@ -1,0 +1,120 @@
+DEEP LEARNING PRACTICAL VIVA QUESTIONS & ANSWERS
+
+-----------------------------
+GENERAL DL QUESTIONS
+-----------------------------
+
+1. What is Deep Learning?
+A subset of machine learning that uses neural networks with multiple layers.
+
+2. What is a neural network?
+A system of interconnected neurons that process data in layers.
+
+3. What is an epoch?
+One complete pass of the dataset through the model.
+
+4. What is batch size?
+Number of samples processed before updating weights.
+
+5. What is overfitting?
+Model performs well on training data but poorly on new data.
+
+6. What is activation function?
+Function applied to neuron output (ReLU, Sigmoid, Softmax).
+
+7. What is loss function?
+Measures error between predicted and actual values.
+
+8. What is optimizer?
+Algorithm to update weights (Adam, SGD).
+
+9. What is gradient descent?
+Method to minimize loss by updating weights.
+
+10. What is backpropagation?
+Process of updating weights using gradients.
+
+-----------------------------
+DL1: LINEAR REGRESSION (DNN)
+-----------------------------
+
+11. What is regression?
+Predicting continuous values.
+
+12. Why use neural network for regression?
+To model complex relationships between variables.
+
+13. Output layer activation?
+Linear (no activation).
+
+-----------------------------
+DL2: OCR CLASSIFICATION
+-----------------------------
+
+14. What is multiclass classification?
+Classifying input into more than two classes.
+
+15. Which activation used in output?
+Softmax.
+
+16. Loss function used?
+Categorical Crossentropy.
+
+-----------------------------
+DL3: IMDB CLASSIFICATION
+-----------------------------
+
+17. What is binary classification?
+Classifying into two categories.
+
+18. Output activation?
+Sigmoid.
+
+19. Loss function?
+Binary Crossentropy.
+
+-----------------------------
+DL4 & DL5: CNN
+-----------------------------
+
+20. What is CNN?
+Neural network specialized for image processing.
+
+21. What is convolution layer?
+Extracts features using filters.
+
+22. What is pooling?
+Reduces dimensions of feature maps.
+
+23. Why CNN for images?
+Captures spatial features.
+
+-----------------------------
+DL6: RNN
+-----------------------------
+
+24. What is RNN?
+Neural network for sequential data.
+
+25. What is LSTM?
+Advanced RNN that handles long-term dependencies.
+
+26. Why RNN for stock prediction?
+Handles time-series data.
+
+-----------------------------
+COMMON PRACTICAL QUESTIONS
+-----------------------------
+
+27. Why use TensorFlow/Keras?
+Easy to build and train neural networks.
+
+28. What happens if epochs increase?
+Better learning but risk of overfitting.
+
+29. What is accuracy?
+Percentage of correct predictions.
+
+30. Does more layers mean better model?
+Not always; may lead to overfitting.
+
